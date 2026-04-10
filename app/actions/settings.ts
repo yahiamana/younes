@@ -57,8 +57,12 @@ export async function updateSiteSettings(formData: FormData) {
     revalidatePath("/admin/settings");
     return { success: true };
   } catch (error) {
-    const message = error instanceof Error ? error.message : "An unexpected server error occurred";
-    console.error("[Settings Action Error]:", error);
-    return { error: message };
+    // Diagnostic Recovery: Return the detailed error to the UI string to debug Vercel environment
+    const errorDetail = error instanceof Error 
+      ? `${error.name}: ${error.message} ${error.stack?.split('\n').slice(0, 2).join(' ')}` 
+      : "Unknown Server Error";
+    
+    console.error("[CRITICAL DB ERROR]:", error);
+    return { error: `Server Error (Code: 500): ${errorDetail}. Check Vercel logs for full trace.` };
   }
 }

@@ -124,7 +124,7 @@ function addSecurityHeaders(response: NextResponse) {
     frame-ancestors 'none';
     form-action 'self';
     base-uri 'self';
-    ${isDev ? "upgrade-insecure-requests;" : ""}
+    ${!isDev ? "upgrade-insecure-requests;" : ""}
   `.replace(/\s{2,}/g, ' ').trim();
   
   response.headers.set("Content-Security-Policy", csp);
