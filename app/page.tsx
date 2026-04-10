@@ -2,10 +2,12 @@ import { prisma } from "@/lib/db";
 import HomeClient from "./HomeClient";
 
 async function getData() {
-  try {
-    let settings = await prisma.siteSettings.findFirst();
+    const settings = await prisma.siteSettings.findFirst({
+      orderBy: { updatedAt: 'desc' }
+    });
+
     if (!settings) {
-      settings = await prisma.siteSettings.create({ data: {} });
+      await prisma.siteSettings.create({ data: {} });
     }
 
     const [projects, certificates, skills, socialLinks] = await Promise.all([
@@ -24,24 +26,45 @@ async function getData() {
       }),
     ]);
 
-    return { settings, projects, certificates, skills, socialLinks };
-  } catch {
-    // Return defaults if database is not connected yet
-    return {
-      settings: {
-        id: "default",
-        name: "Younes",
-        title: "Data Scientist & ML/DL Engineer",
-        heroHeadline: "Transforming Data Into Intelligence",
-        heroSubtext: "Crafting intelligent systems through data science, machine learning, and deep learning.",
-        aboutText: "I am a passionate Data Scientist and Machine Learning / Deep Learning Engineer.",
+    return { 
+      settings: settings || {
+        id: "temp",
+        name: "Younes Benali",
+        title: "Data Scientist | ML & DL Engineer",
+        heroHeadline: "Turning Data into Impact",
+        heroSubtext: "Machine Learning & AI Builder dedicated to solving complex problems.",
+        aboutText: "Younes Benali is a Data Scientist and Machine Learning Engineer...",
         aboutHighlights: JSON.stringify({ experience: "3+", projects: "20+", certificates: "10+", specialization: "ML/DL" }),
         phone: "0561020056",
         email: "younes.bnl@yahoo.com",
         profilePhoto: null,
         resumeUrl: null,
-        seoTitle: "Younes — Data Scientist & ML/DL Engineer",
-        seoDescription: "Portfolio of Younes",
+        seoTitle: "Younes Benali",
+        seoDescription: "Data Science Portfolio",
+        ogImage: null,
+      }, 
+      projects, 
+      certificates, 
+      skills, 
+      socialLinks 
+    };
+  } catch (err) {
+    console.error("Home Data Fetch Error:", err);
+    return {
+      settings: {
+        id: "default",
+        name: "Younes Benali",
+        title: "Data Scientist | ML & DL Engineer",
+        heroHeadline: "Turning Data into Impact",
+        heroSubtext: "Machine Learning & Deep Learning Engineer | NLP & AI Builder",
+        aboutText: "Younes Benali is a Data Scientist...",
+        aboutHighlights: JSON.stringify({ experience: "3+", projects: "20+", certificates: "10+", specialization: "ML/DL" }),
+        phone: "0561020056",
+        email: "younes.bnl@yahoo.com",
+        profilePhoto: null,
+        resumeUrl: null,
+        seoTitle: "Younes Benali — Portfolio",
+        seoDescription: "Data Science & AI Portfolio",
         ogImage: null,
         createdAt: new Date(),
         updatedAt: new Date(),
