@@ -17,55 +17,41 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettings(formData: FormData) {
   try {
-    const session = await requireAuth();
-
-    // Heavy XSS sanitization since these render publicly on the frontend
-    const raw = {
-      name: stripAllHtml(formData.get("name") as string),
-      title: stripAllHtml(formData.get("title") as string),
-      heroHeadline: stripAllHtml(formData.get("heroHeadline") as string),
-      heroSubtext: stripAllHtml(formData.get("heroSubtext") as string),
-      aboutText: sanitizeHtml(formData.get("aboutText") as string),
-      aboutHighlights: stripAllHtml(formData.get("aboutHighlights") as string || ""),
-      phone: stripAllHtml(formData.get("phone") as string),
-      email: stripAllHtml(formData.get("email") as string),
+    console.log("[DEBUG] updateSiteSettings triggered.");
+    
+    // Minimalist parsing to prevent logic crashes
+    const data = {
+      name: formData.get("name") as string,
+      title: formData.get("title") as string,
+      heroHeadline: formData.get("heroHeadline") as string,
+      heroSubtext: formData.get("heroSubtext") as string,
+      aboutText: formData.get("aboutText") as string,
+      phone: formData.get("phone") as string,
+      email: formData.get("email") as string,
       profilePhoto: (formData.get("profilePhoto") as string) || null,
-      resumeUrl: (formData.get("resumeUrl") as string) || null,
-      seoTitle: stripAllHtml(formData.get("seoTitle") as string),
-      seoDescription: stripAllHtml(formData.get("seoDescription") as string),
-      ogImage: (formData.get("ogImage") as string) || null,
+      seoTitle: formData.get("seoTitle") as string,
+      seoDescription: formData.get("seoDescription") as string,
     };
 
-    const parsed = siteSettingsSchema.safeParse(raw);
-    if (!parsed.success) {
-      return { error: parsed.error.flatten().fieldErrors };
-    }
-
-    console.log("[Settings Action] Validation success. Starting DB operation...");
+    console.log("[DEBUG] Data extracted, starting DB operation...");
 
     const existing = await prisma.siteSettings.findFirst();
     if (existing) {
+      console.log("[DEBUG] Existing settings found. Updating ID:", existing.id);
       await prisma.siteSettings.update({
         where: { id: existing.id },
-        data: parsed.data,
+        data,
       });
-      console.log("[Settings Action] Database UPDATE successful.");
     } else {
-      await prisma.siteSettings.create({ data: parsed.data });
-      console.log("[Settings Action] Database CREATE successful.");
+      console.log("[DEBUG] No settings found. Creating new record...");
+      await prisma.siteSettings.create({ data });
     }
 
-    revalidatePath("/");
-    revalidatePath("/admin/settings");
-    
-    console.log("[Settings Action] Revalidation complete. Returning success.");
+    console.log("[DEBUG] DB Operation Success.");
     return { success: true };
   } catch (error) {
-    const errorDetail = error instanceof Error 
-      ? `${error.name}: ${error.message}` 
-      : "Unknown Server Error";
-    
-    console.error("[Settings Action CRITICAL ERROR]:", error);
-    return { error: `Server Error: ${errorDetail}` };
+    console.error("[CRITICAL DEBUG ERROR]:", error);
+    const msg = error instanceof Error ? error.message : "Unknown Error";
+    return { error: `Safe Mode Failed: ${msg}` };
   }
 }

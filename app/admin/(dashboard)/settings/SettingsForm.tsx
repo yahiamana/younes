@@ -34,12 +34,7 @@ export default function SettingsForm({ settings }: { settings: Settings }) {
     const formData = new FormData(e.currentTarget);
     const result = await updateSiteSettings(formData);
     if (result?.error) {
-      if (typeof result.error === "object") {
-        const messages = Object.values(result.error).flat().join(", ");
-        setError(`Validation Error: ${messages}`);
-      } else {
-        setError(result.error);
-      }
+       setError(typeof result.error === "string" ? result.error : "Unknown Error");
     } else {
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
