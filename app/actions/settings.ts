@@ -41,28 +41,31 @@ export async function updateSiteSettings(formData: FormData) {
       return { error: parsed.error.flatten().fieldErrors };
     }
 
+    console.log("[Settings Action] Validation success. Starting DB operation...");
+
     const existing = await prisma.siteSettings.findFirst();
     if (existing) {
       await prisma.siteSettings.update({
         where: { id: existing.id },
         data: parsed.data,
       });
+      console.log("[Settings Action] Database UPDATE successful.");
     } else {
       await prisma.siteSettings.create({ data: parsed.data });
+      console.log("[Settings Action] Database CREATE successful.");
     }
-
-    await logAudit(session.userId, "UPDATE_SETTINGS", "SiteSettings");
 
     revalidatePath("/");
     revalidatePath("/admin/settings");
+    
+    console.log("[Settings Action] Revalidation complete. Returning success.");
     return { success: true };
   } catch (error) {
-    // Diagnostic Recovery: Return the detailed error to the UI string to debug Vercel environment
     const errorDetail = error instanceof Error 
-      ? `${error.name}: ${error.message} ${error.stack?.split('\n').slice(0, 2).join(' ')}` 
+      ? `${error.name}: ${error.message}` 
       : "Unknown Server Error";
     
-    console.error("[CRITICAL DB ERROR]:", error);
-    return { error: `Server Error (Code: 500): ${errorDetail}. Check Vercel logs for full trace.` };
+    console.error("[Settings Action CRITICAL ERROR]:", error);
+    return { error: `Server Error: ${errorDetail}` };
   }
 }

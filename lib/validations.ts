@@ -56,18 +56,18 @@ export const contactSchema = z.object({
 });
 
 export const siteSettingsSchema = z.object({
-  name: z.string().min(1).max(100),
-  title: z.string().min(1).max(200),
-  heroHeadline: z.string().min(1).max(300),
-  heroSubtext: z.string().max(500),
-  aboutText: z.string().max(5000),
-  aboutHighlights: z.string().max(2000),
-  phone: z.string().max(50),
-  email: z.string().email(),
+  name: z.string().max(100).optional().or(z.literal("")),
+  title: z.string().max(200).optional().or(z.literal("")),
+  heroHeadline: z.string().max(500).optional().or(z.literal("")),
+  heroSubtext: z.string().max(1000).optional().or(z.literal("")),
+  aboutText: z.string().max(10000).optional().or(z.literal("")),
+  aboutHighlights: z.string().max(5000).optional().or(z.literal("")),
+  phone: z.string().max(100).optional().or(z.literal("")),
+  email: z.string().email().optional().or(z.literal("")),
   profilePhoto: z.string().optional().nullable(),
   resumeUrl: z.string().optional().nullable(),
-  seoTitle: z.string().max(200),
-  seoDescription: z.string().max(500),
+  seoTitle: z.string().max(500).optional().or(z.literal("")),
+  seoDescription: z.string().max(1000).optional().or(z.literal("")),
   ogImage: z.string().optional().nullable(),
 });
 
