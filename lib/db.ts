@@ -14,7 +14,8 @@ function createPrismaClient() {
   const isProd = process.env.NODE_ENV === "production";
 
   if (!connectionString) {
-    throw new Error("DATABASE_URL is missing");
+    console.warn("DATABASE_URL is missing. Database access will fail.");
+    return new PrismaClient();
   }
 
   try {
@@ -22,14 +23,15 @@ function createPrismaClient() {
       connectionString, 
       max: isProd ? 10 : 5, 
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 5000, // Increased timeout for stability
+      connectionTimeoutMillis: 10000, // Higher timeout for cold starts
+      ssl: connectionString.includes("sslmode=disable") ? false : { rejectUnauthorized: false },
     });
     
     const adapter = new PrismaPg(pool);
     return new PrismaClient({ adapter });
   } catch (err) {
     console.error("Prisma constructor failed:", err);
-    throw err;
+    return new PrismaClient(); // Fallback to avoid top-level crash
   }
 }
 

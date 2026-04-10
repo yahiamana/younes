@@ -23,7 +23,7 @@ export default async function AdminSettingsPage() {
         heroHeadline: rawSettings.heroHeadline || "",
         heroSubtext: rawSettings.heroSubtext || "",
         aboutText: rawSettings.aboutText || "",
-        aboutHighlights: rawSettings.aboutHighlights || "{}",
+        aboutHighlights: (rawSettings.aboutHighlights && rawSettings.aboutHighlights.trim() !== "") ? rawSettings.aboutHighlights : "{}",
         phone: rawSettings.phone || "",
         email: rawSettings.email || "",
         profilePhoto: rawSettings.profilePhoto,

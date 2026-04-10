@@ -34,7 +34,7 @@ async function getData() {
       heroHeadline: settings?.heroHeadline || "Turning Data into Impact",
       heroSubtext: settings?.heroSubtext || "Machine Learning & AI Builder",
       aboutText: settings?.aboutText || "",
-      aboutHighlights: settings?.aboutHighlights || "{}",
+      aboutHighlights: (settings?.aboutHighlights && settings.aboutHighlights.trim() !== "") ? settings.aboutHighlights : "{}",
       phone: settings?.phone || "",
       email: settings?.email || "",
       profilePhoto: settings?.profilePhoto || null,
