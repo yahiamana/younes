@@ -31,7 +31,7 @@ export default function ProjectCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-500 hover:border-white/20 hover:bg-white/[0.07]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#141427] backdrop-blur-sm transition-all duration-500 hover:border-[#e8c97e]/20"
     >
       {/* Visual Header / Image */}
       <div className="relative aspect-[16/9] w-full overflow-hidden">
@@ -48,12 +48,12 @@ export default function ProjectCard({
             <span className="text-white/20 uppercase tracking-widest text-xs">No Visual Data</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020204] via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e1c] via-transparent to-transparent opacity-60" />
         
         {/* Featured Badge */}
         {featured && (
-          <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 backdrop-blur-md">
-            <span className="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">Strategic Asset</span>
+          <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#e8c97e]/10 border border-[#e8c97e]/20 backdrop-blur-md">
+            <span className="text-[10px] font-bold text-[#e8c97e] uppercase tracking-tighter">Strategic Asset</span>
           </div>
         )}
       </div>
@@ -61,7 +61,7 @@ export default function ProjectCard({
       {/* Content */}
       <div className="flex flex-1 flex-col p-6">
         <div className="mb-4">
-          <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">
+          <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-[#e8c97e] transition-colors duration-300">
             {title}
           </h3>
           <p className="mt-3 text-sm text-white/50 line-clamp-2 font-light leading-relaxed">
@@ -74,7 +74,7 @@ export default function ProjectCard({
           {techStack.map((tech) => (
             <span
               key={tech}
-              className="px-2 py-0.5 rounded text-[10px] uppercase font-mono tracking-widest bg-white/5 border border-white/5 text-white/40 group-hover:border-blue-500/20 group-hover:text-blue-400/70 transition-all"
+              className="px-2 py-0.5 rounded text-[10px] uppercase font-mono tracking-widest bg-white/5 border border-white/5 text-white/40 group-hover:border-[#e8c97e]/30 group-hover:text-[#e8c97e] transition-all"
             >
               {tech}
             </span>
@@ -123,7 +123,7 @@ export default function ProjectCard({
       </div>
 
       {/* Decorative Glow */}
-      <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-blue-500/10 blur-[60px] rounded-full group-hover:bg-blue-500/20 transition-all duration-700" />
+      <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[#e8c97e]/5 blur-[60px] rounded-full group-hover:bg-[#e8c97e]/10 transition-all duration-700" />
     </motion.div>
   );
 }

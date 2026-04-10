@@ -9,11 +9,11 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#020204] flex items-center justify-center p-6 relative overflow-hidden">
+    <main className="min-h-screen bg-[#0e0e1c] flex items-center justify-center p-6 relative overflow-hidden">
       {/* Dynamic Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/5 blur-[120px] rounded-full" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#e8c97e]/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#e8c97e]/2 blur-[120px] rounded-full" />
       </div>
 
       <motion.div 
@@ -27,9 +27,9 @@ export default function LoginPage() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-md"
+            className="w-16 h-16 bg-[#e8c97e]/5 border border-[#e8c97e]/20 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-md"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e8c97e" strokeWidth="1.5">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
               <path d="M7 11V7a5 5 0 0110 0v4" />
             </svg>
@@ -38,9 +38,9 @@ export default function LoginPage() {
           <p className="text-white/40 text-sm tracking-widest uppercase">Encryption Active • Secure Link</p>
         </div>
 
-        <div className="glass-strong p-8 md:p-10 relative overflow-hidden">
+        <div className="glass-strong p-8 md:p-10 relative overflow-hidden border border-[#e8c97e]/10">
           {/* Internal Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#e8c97e]/20 to-transparent" />
           
           <form action={formAction} className="space-y-6">
             <AnimatePresence mode="wait">
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 required
                 autoComplete="email"
                 placeholder="email@vault.com"
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 focus:ring-4 focus:ring-white/5 transition-all outline-none"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[#e8c97e]/30 focus:ring-4 focus:ring-[#e8c97e]/5 transition-all outline-none"
               />
             </div>
 
@@ -91,7 +91,7 @@ export default function LoginPage() {
                   required
                   autoComplete="current-password"
                   placeholder="••••••••••••"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 focus:ring-4 focus:ring-white/5 transition-all outline-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-[#e8c97e]/30 focus:ring-4 focus:ring-[#e8c97e]/5 transition-all outline-none"
                 />
                 <button
                   type="button"
@@ -122,10 +122,10 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full bg-white text-black font-bold py-3.5 rounded-xl hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
+              className="w-full bg-[#e8c97e] text-[#0e0e1c] font-bold py-3.5 rounded-xl hover:bg-[#f2d995] transition-all flex items-center justify-center gap-2 group disabled:opacity-50"
             >
               {pending ? (
-                <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-[#0e0e1c]/20 border-t-[#0e0e1c] rounded-full animate-spin" />
               ) : (
                 <>
                   Authenticate

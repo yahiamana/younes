@@ -30,13 +30,13 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
     <section 
       id="projects" 
-      className="relative py-32 bg-[#020204] overflow-hidden"
+      className="relative py-32 bg-[#0e0e1c] overflow-hidden"
     >
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div className="mb-20">
           <ScrollReveal>
-            <span className="text-blue-500 uppercase tracking-[0.5em] text-xs font-bold mb-4 block">
+            <span className="text-[#e8c97e] uppercase tracking-[0.5em] text-xs font-bold mb-4 block">
               Strategic Showcase
             </span>
             <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-8 leading-none">
@@ -69,12 +69,12 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
             </h3>
             <Link 
               href="/projects" 
-              className="group relative inline-flex items-center gap-4 px-12 py-5 rounded-full border border-white/10 hover:border-blue-500/50 transition-all duration-500 bg-white/[0.02] overflow-hidden"
+              className="group relative inline-flex items-center gap-4 px-12 py-5 rounded-full border border-white/10 hover:border-[#e8c97e]/50 transition-all duration-500 bg-white/[0.02] overflow-hidden"
             >
               <span className="relative z-10 text-white font-bold tracking-[0.2em] text-xs uppercase">
                 View Full Project Archive
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#e8c97e]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <svg 
                 width="16" 
                 height="16" 
@@ -93,8 +93,8 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
       </div>
 
       {/* Background Decorative Element */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[50vw] h-[50vh] bg-purple-500/[0.02] blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#e8c97e]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[50vw] h-[50vh] bg-[#e8c97e]/2 blur-[150px] rounded-full pointer-events-none" />
     </section>
   );
 }

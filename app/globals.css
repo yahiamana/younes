@@ -1,33 +1,32 @@
 @import "tailwindcss";
 
-/* ========== DESIGN SYSTEM TOKENS ========== */
+/* ========== LUXURY DESIGN SYSTEM TOKENS ========== */
 :root {
-  --bg-primary: #020204;
-  --bg-secondary: #08080c;
-  --bg-tertiary: #0c0c14;
-  --bg-card: rgba(255, 255, 255, 0.015);
-  --bg-card-hover: rgba(255, 255, 255, 0.035);
-  --bg-glass: rgba(5, 5, 10, 0.4);
+  --bg-primary: #0e0e1c;
+  --bg-secondary: #141427;
+  --bg-tertiary: #1a1a2e;
+  --bg-card: rgba(20, 20, 39, 0.4);
+  --bg-card-hover: rgba(20, 20, 39, 0.6);
+  --bg-glass: rgba(14, 14, 28, 0.7);
 
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.65);
-  --text-tertiary: rgba(255, 255, 255, 0.4);
-  --text-accent: #f0f0f0;
+  --text-secondary: #b8b8c0;
+  --text-tertiary: rgba(184, 184, 192, 0.5);
+  --text-accent: #e8c97e;
 
-  --accent-primary: #ffffff;
-  --accent-secondary: #a0a0b0;
-  --accent-cyan: #e2e8f0;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #a0a0b0 50%, #404050 100%);
-  --accent-glow: rgba(255, 255, 255, 0.08);
+  --accent-primary: #e8c97e;
+  --accent-secondary: #f2d995;
+  --accent-gradient: linear-gradient(135deg, #e8c97e 0%, #c0a060 100%);
+  --accent-glow: rgba(232, 201, 126, 0.1);
 
-  --border-subtle: rgba(255, 255, 255, 0.04);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-active: rgba(255, 255, 255, 0.5);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(232, 201, 126, 0.15);
+  --border-active: #e8c97e;
 
   --shadow-sm: 0 4px 24px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.6);
   --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.8);
-  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.05);
+  --shadow-glow: 0 0 30px rgba(232, 201, 126, 0.1);
 
   --radius-sm: 8px;
   --radius-md: 16px;
@@ -127,7 +126,7 @@
 
 .glow-border {
   border: 1px solid var(--border-active);
-  box-shadow: var(--shadow-glow), inset 0 0 20px rgba(99, 102, 241, 0.03);
+  box-shadow: var(--shadow-glow), inset 0 0 20px rgba(232, 201, 126, 0.03);
 }
 
 /* ========== CARD STYLES ========== */
@@ -173,43 +172,49 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 32px;
-  background: var(--accent-gradient);
-  color: white;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: 14px 34px;
+  background: var(--accent-primary);
+  color: #0e0e1c;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
   transition: all var(--transition-normal);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(232, 201, 126, 0.15);
 }
 
 .btn-primary:hover {
+  background: var(--accent-secondary);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 30px rgba(232, 201, 126, 0.3);
 }
 
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 32px;
+  padding: 14px 34px;
   background: transparent;
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: 0.9rem;
+  color: var(--accent-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   border-radius: var(--radius-full);
-  border: 1px solid var(--border-medium);
+  border: 1px solid rgba(232, 201, 126, 0.3);
   cursor: pointer;
   transition: all var(--transition-normal);
 }
 
 .btn-secondary:hover {
   border-color: var(--accent-primary);
-  color: var(--accent-primary);
-  box-shadow: var(--shadow-glow);
+  background: rgba(232, 201, 126, 0.05);
+  box-shadow: 0 0 20px rgba(232, 201, 126, 0.1);
 }
 
 /* ========== ADMIN SPECIFIC ========== */
@@ -235,7 +240,7 @@
 
 .admin-input:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 3px rgba(232, 201, 126, 0.1);
 }
 
 .admin-input::placeholder {

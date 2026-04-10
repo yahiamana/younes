@@ -88,7 +88,7 @@ export default function NeuralBackground() {
       m.y += (m.targetY - m.y) * 0.04;
 
       // Draw background (no clearRect needed with alpha: false)
-      ctx.fillStyle = "#020204";
+      ctx.fillStyle = "#0e0e1c";
       ctx.fillRect(0, 0, width, height);
 
       // Deep celestial ambient aura
@@ -98,8 +98,8 @@ export default function NeuralBackground() {
         0,
         width / 2, height / 2, Math.max(width, height) * 0.9
       );
-      auroraGradient.addColorStop(0, "rgba(255, 255, 255, 0.03)");
-      auroraGradient.addColorStop(0.4, "rgba(160, 160, 200, 0.01)");
+      auroraGradient.addColorStop(0, "rgba(232, 201, 126, 0.04)");
+      auroraGradient.addColorStop(0.4, "rgba(232, 201, 126, 0.01)");
       auroraGradient.addColorStop(1, "rgba(0, 0, 0, 0)");
       ctx.fillStyle = auroraGradient;
       ctx.fillRect(0, 0, width, height);
@@ -129,9 +129,9 @@ export default function NeuralBackground() {
         
         if (p.type === "star") {
           const brightness = Math.abs(Math.sin(time * 5 + p.x * 0.01));
-          ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * brightness})`;
+          ctx.fillStyle = `rgba(232, 201, 126, ${p.alpha * brightness * 0.4})`;
         } else {
-          ctx.fillStyle = `rgba(200, 200, 220, ${p.alpha * 0.15})`;
+          ctx.fillStyle = `rgba(184, 184, 192, ${p.alpha * 0.1})`;
         }
         ctx.fill();
       }

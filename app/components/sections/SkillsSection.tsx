@@ -60,7 +60,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
   }, {} as Record<string, SkillSubset[]>);
 
   return (
-    <section ref={sectionRef} id="skills" className="relative py-32 bg-[#020204] overflow-hidden">
+    <section ref={sectionRef} id="skills" className="relative py-32 bg-[#0e0e1c] overflow-hidden">
       <div className="container-custom relative z-10" ref={containerRef}>
         <div className="max-w-7xl mx-auto">
           <p className="text-white/40 uppercase tracking-[0.3em] text-sm mb-16 font-medium text-center md:text-left">Tech Stack & Tools</p>
@@ -83,8 +83,8 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
                   
                   <div className="flex-1 flex flex-wrap gap-4 md:gap-6">
                     {items.map((skill) => (
-                      <MagneticButton key={skill.id} className="skill-badge">
-                        <div className="px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/80 font-medium tracking-wide shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] hover:border-white/40 hover:bg-white/10 transition-all cursor-none flex items-center justify-center">
+                      <MagneticButton key={skill.id} className="skill-badge group">
+                        <div className="px-6 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-white/80 font-medium tracking-wide shadow-[0_0_15px_rgba(255,255,255,0.02)] hover:shadow-[0_0_25px_rgba(232,201,126,0.1)] hover:border-[#e8c97e]/40 hover:bg-[#e8c97e]/10 hover:text-[#e8c97e] transition-all cursor-none flex items-center justify-center">
                           {skill.name}
                         </div>
                       </MagneticButton>
@@ -98,7 +98,7 @@ export default function SkillsSection({ skills }: SkillsSectionProps) {
       </div>
 
       {/* Decorative blurred orbit */}
-      <div className="absolute top-1/2 left-3/4 -translate-y-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-indigo-500/5 blur-[200px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-3/4 -translate-y-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[#e8c97e]/5 blur-[200px] rounded-full pointer-events-none" />
     </section>
   );
 }

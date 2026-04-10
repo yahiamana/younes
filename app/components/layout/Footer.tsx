@@ -70,7 +70,7 @@ export default function Footer({
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:border-[#e8c97e]/40 hover:text-[#e8c97e]"
                   style={{
                     background: "var(--bg-card)",
                     border: "1px solid var(--border-subtle)",

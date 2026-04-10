@@ -34,20 +34,22 @@ export default function ContactSection({ phone, email }: ContactProps) {
           {/* Contact Info */}
           <div className="lg:col-span-2 space-y-8">
             <ScrollReveal>
-              <div className="card-premium p-6">
+              <div className="card-premium p-6 group">
                 <div className="flex items-center gap-4 mb-2">
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{ background: "var(--accent-glow)" }}
+                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500"
+                    style={{ 
+                      background: "rgba(232, 201, 126, 0.05)",
+                      border: "1px solid rgba(232, 201, 126, 0.15)"
+                    }}
                   >
                     <svg
-                      width="18"
-                      height="18"
+                      width="20"
+                      height="20"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="currentColor"
+                      stroke="#e8c97e"
                       strokeWidth="2"
-                      style={{ color: "var(--accent-primary)" }}
                     >
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                       <polyline points="22,6 12,13 2,6" />
@@ -55,14 +57,14 @@ export default function ContactSection({ phone, email }: ContactProps) {
                   </div>
                   <div>
                     <p
-                      className="text-xs font-medium uppercase tracking-wider mb-1"
+                      className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1"
                       style={{ color: "var(--text-tertiary)" }}
                     >
-                      Email
+                      Direct Email
                     </p>
                     <a
                       href={`mailto:${email}`}
-                      className="text-sm font-medium hover:text-[var(--accent-primary)] transition-colors"
+                      className="text-sm font-bold text-white hover:text-[#e8c97e] transition-colors"
                     >
                       {email}
                     </a>
@@ -72,34 +74,36 @@ export default function ContactSection({ phone, email }: ContactProps) {
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <div className="card-premium p-6">
+              <div className="card-premium p-6 group">
                 <div className="flex items-center gap-4 mb-2">
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{ background: "var(--accent-glow)" }}
+                    className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500"
+                    style={{ 
+                      background: "rgba(232, 201, 126, 0.05)",
+                      border: "1px solid rgba(232, 201, 126, 0.15)"
+                    }}
                   >
                     <svg
-                      width="18"
-                      height="18"
+                      width="20"
+                      height="20"
                       viewBox="0 0 24 24"
                       fill="none"
-                      stroke="currentColor"
+                      stroke="#e8c97e"
                       strokeWidth="2"
-                      style={{ color: "var(--accent-primary)" }}
                     >
                       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                     </svg>
                   </div>
                   <div>
                     <p
-                      className="text-xs font-medium uppercase tracking-wider mb-1"
+                      className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1"
                       style={{ color: "var(--text-tertiary)" }}
                     >
-                      Phone
+                      Mobile
                     </p>
                     <a
                       href={`tel:${phone}`}
-                      className="text-sm font-medium hover:text-[var(--accent-primary)] transition-colors"
+                      className="text-sm font-bold text-white hover:text-[#e8c97e] transition-colors"
                     >
                       {phone}
                     </a>
@@ -121,20 +125,20 @@ export default function ContactSection({ phone, email }: ContactProps) {
                     className="card-premium p-12 text-center"
                   >
                     <div
-                      className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6"
+                      className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6"
                       style={{
-                        background: "rgba(34, 197, 94, 0.1)",
-                        border: "1px solid rgba(34, 197, 94, 0.2)",
+                        background: "rgba(232, 201, 126, 0.05)",
+                        border: "1px solid rgba(232, 201, 126, 0.2)",
+                        boxShadow: "0 0 40px rgba(232, 201, 126, 0.1)"
                       }}
                     >
                       <svg
-                        width="32"
-                        height="32"
+                        width="36"
+                        height="36"
                         viewBox="0 0 24 24"
                         fill="none"
-                        stroke="currentColor"
+                        stroke="#e8c97e"
                         strokeWidth="2"
-                        style={{ color: "#22c55e" }}
                       >
                         <polyline points="20 6 9 17 4 12" />
                       </svg>

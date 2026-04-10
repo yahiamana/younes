@@ -67,8 +67,8 @@ export default function Navbar({ name }: NavbarProps) {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
         style={{
-          background: scrolled ? "rgba(5, 5, 8, 0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
+          background: scrolled ? "rgba(14, 14, 28, 0.85)" : "transparent",
+          backdropFilter: scrolled ? "blur(30px)" : "none",
           borderBottom: scrolled
             ? "1px solid var(--border-subtle)"
             : "1px solid transparent",
@@ -149,8 +149,8 @@ export default function Navbar({ name }: NavbarProps) {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 md:hidden flex flex-col items-center justify-center gap-6"
             style={{
-              background: "rgba(5, 5, 8, 0.95)",
-              backdropFilter: "blur(30px)",
+              background: "rgba(14, 14, 28, 0.95)",
+              backdropFilter: "blur(40px)",
             }}
           >
             {navLinks.map((link) => (

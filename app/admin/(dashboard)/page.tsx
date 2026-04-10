@@ -25,10 +25,10 @@ export default async function AdminDashboard() {
   const stats = await getStats();
 
   const cards = [
-    { label: "Projects", value: stats.projectCount, href: "/admin/projects", color: "#6366f1" },
-    { label: "Certificates", value: stats.certCount, href: "/admin/certificates", color: "#8b5cf6" },
-    { label: "Messages", value: stats.messageCount, href: "/admin/messages", color: "#06b6d4" },
-    { label: "Unread", value: stats.unreadCount, href: "/admin/messages", color: "#f59e0b" },
+    { label: "Projects", value: stats.projectCount, href: "/admin/projects", color: "#e8c97e" },
+    { label: "Certificates", value: stats.certCount, href: "/admin/certificates", color: "#e8c97e" },
+    { label: "Messages", value: stats.messageCount, href: "/admin/messages", color: "#e8c97e" },
+    { label: "Unread", value: stats.unreadCount, href: "/admin/messages", color: "#e8c97e" },
   ];
 
   return (
@@ -46,15 +46,15 @@ export default async function AdminDashboard() {
           <Link
             key={card.label}
             href={card.href}
-            className="admin-card hover:border-[var(--border-medium)] transition-all duration-200 group"
+            className="admin-card hover:border-[#e8c97e]/30 transition-all duration-300 group"
           >
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-medium" style={{ color: "var(--text-secondary)" }}>
                 {card.label}
               </span>
               <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center"
-                style={{ background: `${card.color}15`, color: card.color }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-colors group-hover:bg-[#e8c97e] group-hover:text-[#0e0e1c]"
+                style={{ background: "rgba(232, 201, 126, 0.05)", color: "#e8c97e", border: "1px solid rgba(232, 201, 126, 0.15)" }}
               >
                 <span className="text-sm font-bold">{card.value}</span>
               </div>
@@ -70,7 +70,7 @@ export default async function AdminDashboard() {
           <h2 className="text-lg font-bold">Recent Messages</h2>
           <Link
             href="/admin/messages"
-            className="text-sm font-medium"
+            className="text-sm font-bold hover:text-[#e8c97e] transition-colors"
             style={{ color: "var(--accent-primary)" }}
           >
             View all →
@@ -78,25 +78,25 @@ export default async function AdminDashboard() {
         </div>
 
         {stats.recentMessages.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {stats.recentMessages.map((msg) => (
               <div
                 key={msg.id}
-                className="flex items-start gap-4 p-4 rounded-lg transition-colors"
+                className="flex items-start gap-4 p-5 rounded-xl transition-all duration-300 group"
                 style={{
-                  background: msg.read ? "transparent" : "var(--accent-glow)",
-                  border: `1px solid ${msg.read ? "var(--border-subtle)" : "rgba(99,102,241,0.1)"}`,
+                  background: msg.read ? "transparent" : "rgba(232, 201, 126, 0.03)",
+                  border: `1px solid ${msg.read ? "rgba(255,255,255,0.05)" : "rgba(232, 201, 126, 0.1)"}`,
                 }}
               >
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-bold"
-                  style={{ background: "var(--bg-secondary)", color: "var(--accent-primary)" }}
+                  className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 text-sm font-bold border border-white/5"
+                  style={{ background: "var(--bg-secondary)", color: msg.read ? "var(--text-secondary)" : "#e8c97e" }}
                 >
                   {msg.name.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm truncate">{msg.name}</span>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className={`font-bold text-sm truncate ${msg.read ? 'text-white' : 'text-[#e8c97e]'}`}>{msg.name}</span>
                     <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>
                       {new Date(msg.createdAt).toLocaleDateString()}
                     </span>

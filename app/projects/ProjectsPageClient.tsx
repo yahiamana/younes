@@ -32,14 +32,14 @@ export default function ProjectsPageClient({ projects }: Props) {
   });
 
   return (
-    <div className="min-h-screen pt-32 pb-24 bg-[#020204]">
+    <div className="min-h-screen pt-32 pb-24 bg-[#0e0e1c]">
       <div className="container-custom">
         {/* Header */}
         <div className="relative mb-20 text-center md:text-left">
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-xs uppercase tracking-[0.5em] text-blue-500 font-bold mb-4 block"
+            className="text-xs uppercase tracking-[0.5em] text-[#e8c97e] font-bold mb-4 block"
           >
             Project Archive
           </motion.span>
@@ -70,8 +70,8 @@ export default function ProjectsPageClient({ projects }: Props) {
               onClick={() => setFilter(cat)}
               className={`px-6 py-2 rounded-full text-xs uppercase tracking-widest font-medium transition-all duration-300 border ${
                 filter === cat 
-                  ? "bg-blue-500 text-white border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.3)]" 
-                  : "bg-white/5 text-white/40 border-white/5 hover:border-white/20 hover:text-white"
+                  ? "bg-[#e8c97e] text-[#0e0e1c] border-[#e8c97e] shadow-[0_0_20px_rgba(232,201,126,0.3)]" 
+                  : "bg-white/5 text-white/40 border-white/5 hover:border-[#e8c97e]/40 hover:text-white"
               }`}
             >
               {cat}

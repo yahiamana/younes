@@ -81,8 +81,8 @@ export default function HeroSection({ headline, subtext, profilePhoto }: HeroSec
             className="relative mb-10 group"
           >
             {/* Animated Glow Rings */}
-            <div className="absolute inset-0 -m-4 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700 opacity-60" />
-            <div className="absolute inset-0 -m-1 bg-gradient-to-tr from-white/20 to-transparent rounded-full border border-white/10" />
+            <div className="absolute inset-0 -m-4 bg-gradient-to-tr from-[#e8c97e]/15 to-transparent rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700 opacity-60" />
+            <div className="absolute inset-0 -m-1 bg-gradient-to-tr from-[#e8c97e]/20 to-transparent rounded-full border border-[#e8c97e]/10" />
             
             <div className="relative w-32 h-32 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-white/10 backdrop-blur-sm grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500 shadow-2xl">
               <Image
@@ -95,7 +95,8 @@ export default function HeroSection({ headline, subtext, profilePhoto }: HeroSec
             </div>
 
             {/* Subtle decorative elements */}
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full border-4 border-[#020204] z-20 shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
+            {/* Subtle decorative elements */}
+            <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#e8c97e] rounded-full border-4 border-[#0e0e1c] z-20 shadow-[0_0_15px_rgba(232,201,126,0.5)]" />
           </div>
         )}
 
@@ -158,7 +159,7 @@ export default function HeroSection({ headline, subtext, profilePhoto }: HeroSec
       </div>
 
       {/* Floating Foreground Light */}
-      <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-white/5 blur-[100px] rounded-[100%]" />
+      <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#e8c97e]/5 blur-[100px] rounded-[100%]" />
     </section>
   );
 }

@@ -127,15 +127,18 @@ export default function AdminShell({
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-300"
                 style={{
-                  background: isActive(item.href) ? "var(--accent-glow)" : "transparent",
+                  background: isActive(item.href) ? "rgba(232, 201, 126, 0.08)" : "transparent",
                   color: isActive(item.href) ? "var(--accent-primary)" : "var(--text-secondary)",
-                  border: isActive(item.href) ? "1px solid rgba(99,102,241,0.15)" : "1px solid transparent",
+                  border: isActive(item.href) ? "1px solid rgba(232, 201, 126, 0.15)" : "1px solid transparent",
+                  boxShadow: isActive(item.href) ? "0 0 20px rgba(232, 201, 126, 0.03)" : "none",
                 }}
                 onClick={() => setSidebarOpen(false)}
               >
-                {item.icon}
+                <span className={isActive(item.href) ? "text-[#e8c97e]" : "text-gray-400"}>
+                  {item.icon}
+                </span>
                 {item.label}
               </Link>
             ))}
