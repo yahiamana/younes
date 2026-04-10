@@ -8,12 +8,13 @@ interface NavbarProps {
   name: string;
 }
 
+import Link from "next/link";
+
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Certificates", href: "#certificates" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/projects" }, // Primary link goes to the full archive
+  { label: "Skills", href: "/#skills" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar({ name }: NavbarProps) {
@@ -34,7 +35,7 @@ export default function Navbar({ name }: NavbarProps) {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(`#${entry.target.id}`);
+            setActiveSection(`/#${entry.target.id}`);
           }
         });
       },
@@ -75,18 +76,18 @@ export default function Navbar({ name }: NavbarProps) {
       >
         <div className="container-custom flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a
-            href="#hero"
+          <Link
+            href="/#hero"
             className="text-lg md:text-xl font-bold tracking-tight hover:text-[var(--accent-primary)] transition-colors"
           >
             {name}
             <span style={{ color: "var(--accent-primary)" }}>.</span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="relative px-4 py-2 text-sm font-medium transition-colors duration-300"
@@ -106,7 +107,7 @@ export default function Navbar({ name }: NavbarProps) {
                     transition={{ duration: 0.3 }}
                   />
                 )}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -153,7 +154,7 @@ export default function Navbar({ name }: NavbarProps) {
             }}
           >
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
@@ -166,7 +167,7 @@ export default function Navbar({ name }: NavbarProps) {
                 }}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </motion.div>
         )}
