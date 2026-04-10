@@ -30,9 +30,12 @@ export default function CustomCursor() {
     window.addEventListener("mousemove", updateMousePosition);
     window.addEventListener("mouseover", handleMouseOver);
 
-    // Hide default cursor across the document
-    document.documentElement.style.cursor = "none";
-    document.body.style.cursor = "none";
+    // Hide default cursor ONLY on desktop
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if (isDesktop) {
+      document.documentElement.style.cursor = "none";
+      document.body.style.cursor = "none";
+    }
 
     return () => {
       window.removeEventListener("mousemove", updateMousePosition);
@@ -64,7 +67,7 @@ export default function CustomCursor() {
   };
 
   return (
-    <>
+    <div className="hidden lg:block">
       <motion.div
         className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999]"
         variants={variants}
@@ -90,6 +93,6 @@ export default function CustomCursor() {
           duration: 0.1,
         }}
       />
-    </>
+    </div>
   );
 }
