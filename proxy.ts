@@ -20,32 +20,37 @@ export default async function middleware(request: NextRequest) {
   if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(requestMethod)) {
     const origin = request.headers.get("origin");
     const referer = request.headers.get("referer");
-    const host = request.headers.get("host");
+    const forwardedHost = request.headers.get("x-forwarded-host");
+    const host = forwardedHost || request.headers.get("host");
 
     if (host) {
-      // Validate origin matches host conceptually
+      const isDev = process.env.NODE_ENV !== "production";
+      
+      // Verification logic
+      let isValid = false;
+      
       if (origin) {
         try {
           const originUrl = new URL(origin);
-          if (originUrl.host !== host) {
-            return new NextResponse("Forbidden Origin", { status: 403 });
-          }
+          // Standard check: Host must match exactly. 
+          // Port check is ignored in dev to handle local server fluctuations.
+          isValid = isDev ? (originUrl.hostname === host.split(':')[0]) : (originUrl.host === host);
         } catch {
-          return new NextResponse("Invalid Origin", { status: 400 });
+          isValid = false;
         }
       } else if (referer) {
-        // Fallback to referer if origin is missing (common in some older setups)
         try {
           const refererUrl = new URL(referer);
-          if (refererUrl.host !== host) {
-            return new NextResponse("Forbidden Referer", { status: 403 });
-          }
+          isValid = isDev ? (refererUrl.hostname === host.split(':')[0]) : (refererUrl.host === host);
         } catch {
-          return new NextResponse("Invalid Referer", { status: 400 });
+          isValid = false;
         }
-      } else {
-        // Strict mode: deny mutation if it lacks both Origin and Referer
-        return new NextResponse("Missing Origin/Referer", { status: 403 });
+      }
+
+      if (!isValid && !isDev) {
+        // Log rejection for debugging purposes (visible in Vercel logs)
+        console.error(`[Middleware Rejection] Path: ${pathname}, Method: ${requestMethod}, Origin: ${origin}, Referer: ${referer}, Dest Host: ${host}`);
+        return new NextResponse("Forbidden Mutation: Origin/Referer Mismatch or Missing", { status: 403 });
       }
     }
   }

@@ -16,43 +16,49 @@ export async function getSiteSettings() {
 }
 
 export async function updateSiteSettings(formData: FormData) {
-  const session = await requireAuth();
+  try {
+    const session = await requireAuth();
 
-  // Heavy XSS sanitization since these render publicly on the frontend
-  const raw = {
-    name: stripAllHtml(formData.get("name") as string),
-    title: stripAllHtml(formData.get("title") as string),
-    heroHeadline: stripAllHtml(formData.get("heroHeadline") as string),
-    heroSubtext: stripAllHtml(formData.get("heroSubtext") as string),
-    aboutText: sanitizeHtml(formData.get("aboutText") as string),
-    aboutHighlights: stripAllHtml(formData.get("aboutHighlights") as string || ""),
-    phone: stripAllHtml(formData.get("phone") as string),
-    email: stripAllHtml(formData.get("email") as string),
-    profilePhoto: (formData.get("profilePhoto") as string) || null,
-    resumeUrl: (formData.get("resumeUrl") as string) || null,
-    seoTitle: stripAllHtml(formData.get("seoTitle") as string),
-    seoDescription: stripAllHtml(formData.get("seoDescription") as string),
-    ogImage: (formData.get("ogImage") as string) || null,
-  };
+    // Heavy XSS sanitization since these render publicly on the frontend
+    const raw = {
+      name: stripAllHtml(formData.get("name") as string),
+      title: stripAllHtml(formData.get("title") as string),
+      heroHeadline: stripAllHtml(formData.get("heroHeadline") as string),
+      heroSubtext: stripAllHtml(formData.get("heroSubtext") as string),
+      aboutText: sanitizeHtml(formData.get("aboutText") as string),
+      aboutHighlights: stripAllHtml(formData.get("aboutHighlights") as string || ""),
+      phone: stripAllHtml(formData.get("phone") as string),
+      email: stripAllHtml(formData.get("email") as string),
+      profilePhoto: (formData.get("profilePhoto") as string) || null,
+      resumeUrl: (formData.get("resumeUrl") as string) || null,
+      seoTitle: stripAllHtml(formData.get("seoTitle") as string),
+      seoDescription: stripAllHtml(formData.get("seoDescription") as string),
+      ogImage: (formData.get("ogImage") as string) || null,
+    };
 
-  const parsed = siteSettingsSchema.safeParse(raw);
-  if (!parsed.success) {
-    return { error: parsed.error.flatten().fieldErrors };
+    const parsed = siteSettingsSchema.safeParse(raw);
+    if (!parsed.success) {
+      return { error: parsed.error.flatten().fieldErrors };
+    }
+
+    const existing = await prisma.siteSettings.findFirst();
+    if (existing) {
+      await prisma.siteSettings.update({
+        where: { id: existing.id },
+        data: parsed.data,
+      });
+    } else {
+      await prisma.siteSettings.create({ data: parsed.data });
+    }
+
+    await logAudit(session.userId, "UPDATE_SETTINGS", "SiteSettings");
+
+    revalidatePath("/");
+    revalidatePath("/admin/settings");
+    return { success: true };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "An unexpected server error occurred";
+    console.error("[Settings Action Error]:", error);
+    return { error: message };
   }
-
-  const existing = await prisma.siteSettings.findFirst();
-  if (existing) {
-    await prisma.siteSettings.update({
-      where: { id: existing.id },
-      data: parsed.data,
-    });
-  } else {
-    await prisma.siteSettings.create({ data: parsed.data });
-  }
-
-  await logAudit(session.userId, "UPDATE_SETTINGS", "SiteSettings");
-
-  revalidatePath("/");
-  revalidatePath("/admin/settings");
-  return { success: true };
 }

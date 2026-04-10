@@ -18,11 +18,11 @@ function createPrismaClient() {
   }
 
   try {
-    // Optimization: In serverless (Vercel), we should keep the pool size small
-    // to prevent exhaustion across multiple lambda instances.
+    // Optimization: In serverless (Vercel), handle pool limits reasonably.
+    // 10 is a standard safe number for Neon/Vercel serverless functions.
     const pool = new pg.Pool({ 
       connectionString, 
-      max: isProd ? 1 : 0, // In prod serverless, usually 1 connection per instance is safest
+      max: isProd ? 10 : 5, 
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 2000,
     });
