@@ -25,6 +25,7 @@ interface Props {
     phone: string;
     email: string;
     profilePhoto: string | null;
+    resumeUrl: string | null;
   };
   projects: {
     id: string;
@@ -79,6 +80,7 @@ export default function HomeClient({
           headline={settings.heroHeadline}
           subtext={settings.heroSubtext}
           profilePhoto={settings.profilePhoto}
+          resumeUrl={settings.resumeUrl}
         />
         <AboutSection 
           aboutText={settings.aboutText} 

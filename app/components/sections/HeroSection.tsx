@@ -11,9 +11,10 @@ interface HeroSectionProps {
   headline: string;
   subtext: string;
   profilePhoto: string | null;
+  resumeUrl: string | null;
 }
 
-export default function HeroSection({ headline, subtext, profilePhoto }: HeroSectionProps) {
+export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl }: HeroSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
   const subtextRef = useRef<HTMLParagraphElement>(null);
@@ -63,6 +64,16 @@ export default function HeroSection({ headline, subtext, profilePhoto }: HeroSec
 
     return () => ctx.revert();
   }, []);
+
+  // Force Cloudinary to download the file instead of opening it inline
+  const getDownloadUrl = (url: string) => {
+    if (url.includes('res.cloudinary.com') && !url.includes('fl_attachment')) {
+      return url.replace('/upload/', '/upload/fl_attachment/');
+    }
+    return url;
+  };
+
+  const finalResumeUrl = resumeUrl ? getDownloadUrl(resumeUrl) : null;
 
   return (
     <section 
@@ -147,14 +158,51 @@ export default function HeroSection({ headline, subtext, profilePhoto }: HeroSec
             </a>
           </MagneticButton>
 
-          <MagneticButton>
-            <a 
-              href="#contact" 
-              className="btn-secondary px-10"
-            >
-              Contact Me
-            </a>
-          </MagneticButton>
+          {finalResumeUrl ? (
+            <MagneticButton>
+              <a 
+                href={finalResumeUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                download="Younes_Benali_CV"
+                className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-500 overflow-hidden"
+                style={{
+                  background: "rgba(232, 201, 126, 0.08)",
+                  border: "1px solid rgba(232, 201, 126, 0.25)",
+                  color: "#e8c97e",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(232, 201, 126, 0.15)";
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(232, 201, 126, 0.5)";
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 0 30px rgba(232, 201, 126, 0.15)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLAnchorElement).style.background = "rgba(232, 201, 126, 0.08)";
+                  (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(232, 201, 126, 0.25)";
+                  (e.currentTarget as HTMLAnchorElement).style.boxShadow = "none";
+                }}
+              >
+                {/* Download Icon */}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-y-0.5 transition-transform duration-300">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                <span>Download CV</span>
+                {/* Animated shimmer effect */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+              </a>
+            </MagneticButton>
+          ) : (
+            <MagneticButton>
+              <a 
+                href="#contact" 
+                className="btn-secondary px-10"
+              >
+                Contact Me
+              </a>
+            </MagneticButton>
+          )}
         </div>
       </div>
 
