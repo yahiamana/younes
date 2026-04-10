@@ -41,7 +41,7 @@ interface Props {
     id: string;
     title: string;
     issuer: string;
-    date: Date;
+    date: string; // Serialized ISO string
     imageUrl: string | null;
     fileUrl: string | null;
   }[];

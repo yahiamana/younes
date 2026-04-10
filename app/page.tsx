@@ -27,48 +27,74 @@ async function getData() {
       }),
     ]);
 
+    // Explicit serialization to pass from Server to Client safely
+    const serializedSettings = {
+      name: settings?.name || "Younes Benali",
+      title: settings?.title || "Data Scientist | ML & DL Engineer",
+      heroHeadline: settings?.heroHeadline || "Turning Data into Impact",
+      heroSubtext: settings?.heroSubtext || "Machine Learning & AI Builder",
+      aboutText: settings?.aboutText || "",
+      aboutHighlights: settings?.aboutHighlights || "{}",
+      phone: settings?.phone || "",
+      email: settings?.email || "",
+      profilePhoto: settings?.profilePhoto || null,
+      resumeUrl: settings?.resumeUrl || null,
+    };
+
+    const serializedProjects = projects.map(p => ({
+      id: p.id,
+      title: p.title,
+      slug: p.slug,
+      description: p.description,
+      techStack: p.techStack,
+      image: p.image,
+      liveUrl: p.liveUrl,
+      githubUrl: p.githubUrl,
+      featured: p.featured,
+    }));
+
+    const serializedCertificates = certificates.map(c => ({
+      id: c.id,
+      title: c.title,
+      issuer: c.issuer,
+      date: c.date.toISOString(), // CRITICAL: Dates must be strings for serialization
+      imageUrl: c.imageUrl,
+      fileUrl: c.fileUrl,
+    }));
+
+    const serializedSkills = skills.map(s => ({
+      id: s.id,
+      name: s.name,
+      category: s.category,
+    }));
+
+    const serializedSocialLinks = socialLinks.map(sl => ({
+      id: sl.id,
+      platform: sl.platform,
+      url: sl.url,
+    }));
+
     return { 
-      settings: settings || {
-        id: "temp",
-        name: "Younes Benali",
-        title: "Data Scientist | ML & DL Engineer",
-        heroHeadline: "Turning Data into Impact",
-        heroSubtext: "Machine Learning & AI Builder dedicated to solving complex problems.",
-        aboutText: "Younes Benali is a Data Scientist and Machine Learning Engineer...",
-        aboutHighlights: JSON.stringify({ experience: "3+", projects: "20+", certificates: "10+", specialization: "ML/DL" }),
-        phone: "0561020056",
-        email: "younes.bnl@yahoo.com",
-        profilePhoto: null,
-        resumeUrl: null,
-        seoTitle: "Younes Benali",
-        seoDescription: "Data Science Portfolio",
-        ogImage: null,
-      }, 
-      projects, 
-      certificates, 
-      skills, 
-      socialLinks 
+      settings: serializedSettings, 
+      projects: serializedProjects, 
+      certificates: serializedCertificates, 
+      skills: serializedSkills, 
+      socialLinks: serializedSocialLinks 
     };
   } catch (err) {
-    console.error("Home Data Fetch Error:", err);
+    console.error("Home Data Fetch Error (RSC Serialization Fail):", err);
     return {
       settings: {
-        id: "default",
         name: "Younes Benali",
         title: "Data Scientist | ML & DL Engineer",
         heroHeadline: "Turning Data into Impact",
-        heroSubtext: "Machine Learning & Deep Learning Engineer | NLP & AI Builder",
-        aboutText: "Younes Benali is a Data Scientist...",
-        aboutHighlights: JSON.stringify({ experience: "3+", projects: "20+", certificates: "10+", specialization: "ML/DL" }),
-        phone: "0561020056",
+        heroSubtext: "Machine Learning & Deep Learning Engineer",
+        aboutText: "Error loading content. Please check database connection.",
+        aboutHighlights: "{}",
+        phone: "",
         email: "younes.bnl@yahoo.com",
         profilePhoto: null,
         resumeUrl: null,
-        seoTitle: "Younes Benali — Portfolio",
-        seoDescription: "Data Science & AI Portfolio",
-        ogImage: null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
       },
       projects: [],
       certificates: [],
@@ -81,13 +107,13 @@ async function getData() {
 export default async function HomePage() {
   const data = await getData();
 
-  let highlights = { experience: "3+", projects: "20+", certificates: "10+", specialization: "ML/DL" };
+  let highlights = {};
   try {
     if (data.settings.aboutHighlights) {
       highlights = JSON.parse(data.settings.aboutHighlights);
     }
-  } catch {
-    // use defaults
+  } catch (err) {
+    console.error("Highlights JSON Parse Error:", err);
   }
 
   return (

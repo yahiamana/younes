@@ -7,18 +7,47 @@ export default async function AdminSettingsPage() {
   let socialLinks: Awaited<ReturnType<typeof prisma.socialLink.findMany>> = [];
 
   try {
-    settings = await prisma.siteSettings.findFirst();
-    if (!settings) {
-      settings = await prisma.siteSettings.create({ data: {} });
+    const rawSettings = await prisma.siteSettings.findFirst({
+      orderBy: { updatedAt: 'desc' }
+    });
+    
+    // Explicitly pick fields to ensure POJO serialization
+    if (rawSettings) {
+      settings = {
+        id: rawSettings.id,
+        name: rawSettings.name || "",
+        title: rawSettings.title || "",
+        heroHeadline: rawSettings.heroHeadline || "",
+        heroSubtext: rawSettings.heroSubtext || "",
+        aboutText: rawSettings.aboutText || "",
+        aboutHighlights: rawSettings.aboutHighlights || "{}",
+        phone: rawSettings.phone || "",
+        email: rawSettings.email || "",
+        profilePhoto: rawSettings.profilePhoto,
+        resumeUrl: rawSettings.resumeUrl,
+        seoTitle: rawSettings.seoTitle || "",
+        seoDescription: rawSettings.seoDescription || "",
+        ogImage: rawSettings.ogImage,
+      };
     }
-    socialLinks = await prisma.socialLink.findMany({ orderBy: { order: "asc" } });
-  } catch { /* db not connected */ }
+
+    const rawSocial = await prisma.socialLink.findMany({ orderBy: { order: "asc" } });
+    socialLinks = rawSocial.map(sl => ({
+      id: sl.id,
+      platform: sl.platform,
+      url: sl.url,
+      icon: sl.icon,
+      order: sl.order,
+    }));
+  } catch (err) {
+    console.error("Admin Settings Fetch Error:", err);
+  }
 
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
         <h1 className="text-2xl font-bold">Settings</h1>
-        <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+        <p className="text-sm text-white/40">
           Manage your site identity, profile, and SEO settings
         </p>
       </div>
