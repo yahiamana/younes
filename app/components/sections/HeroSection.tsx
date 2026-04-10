@@ -152,7 +152,6 @@ export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl
             <MagneticButton>
               <a 
                 href="/api/download-cv" 
-                download="Younes_Benali_CV"
                 className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-500 overflow-hidden"
                 style={{
                   background: "rgba(232, 201, 126, 0.08)",
