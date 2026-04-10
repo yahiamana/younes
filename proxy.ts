@@ -16,8 +16,9 @@ export default async function middleware(request: NextRequest) {
   const isApiUpload = pathname === "/api/upload";
   const requestMethod = request.method;
 
-  // 2. Strict Origin/Referer Checking on Mutations (Defense against CSRF for API routes)
-  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(requestMethod)) {
+  // 2. (Defense against CSRF for API routes)
+  // We bypass the strict origin check for the login page to prevent lockouts during setup/recovery
+  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(requestMethod) && !isLoginPage) {
     const origin = request.headers.get("origin");
     const referer = request.headers.get("referer");
     const forwardedHost = request.headers.get("x-forwarded-host");

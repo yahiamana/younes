@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { PrismaNeon } from "@prisma/adapter-neon";
-import { Pool } from "@neondatabase/serverless";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
 
-// Prisma 7 requires an explicit adapter for serverless/edge environments.
-// Neon's serverless driver is significantly more stable on Vercel than standard PG.
+// Reverting to stable PG driver to resolve SSL/Connection compatibility issues.
+// Increased pool limits maintained for production high-availability.
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -11,16 +11,21 @@ const globalForPrisma = globalThis as unknown as {
 
 function createPrismaClient() {
   const connectionString = process.env.DATABASE_URL;
+  const isProd = process.env.NODE_ENV === "production";
 
   if (!connectionString) {
     throw new Error("DATABASE_URL is missing");
   }
 
   try {
-    // Neon Serverless Pool is optimized for HTTP-based proxy connection
-    const pool = new Pool({ connectionString });
-    const adapter = new PrismaNeon(pool as any);
+    const pool = new pg.Pool({ 
+      connectionString, 
+      max: isProd ? 10 : 5, 
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 5000, // Increased timeout for stability
+    });
     
+    const adapter = new PrismaPg(pool);
     return new PrismaClient({ adapter });
   } catch (err) {
     console.error("Prisma constructor failed:", err);
