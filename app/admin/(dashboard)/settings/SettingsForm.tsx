@@ -33,8 +33,17 @@ export default function SettingsForm({ settings }: { settings: Settings }) {
     setSaved(false);
     const formData = new FormData(e.currentTarget);
     const result = await updateSiteSettings(formData);
+    
     if (result?.error) {
-       setError(typeof result.error === "string" ? result.error : "Unknown Error");
+      if (typeof result.error === "string") {
+        setError(result.error);
+      } else {
+        // Field errors from Zod
+        const errs = result.error as Record<string, string[]>;
+        const firstField = Object.keys(errs)[0];
+        const firstMsg = errs[firstField]?.[0];
+        setError(`${firstField}: ${firstMsg}`);
+      }
     } else {
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);

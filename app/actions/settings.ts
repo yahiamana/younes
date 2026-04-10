@@ -26,11 +26,14 @@ export async function updateSiteSettings(formData: FormData) {
       heroHeadline: stripAllHtml(formData.get("heroHeadline") as string),
       heroSubtext: stripAllHtml(formData.get("heroSubtext") as string),
       aboutText: sanitizeHtml(formData.get("aboutText") as string),
+      aboutHighlights: stripAllHtml(formData.get("aboutHighlights") as string),
       phone: stripAllHtml(formData.get("phone") as string),
       email: stripAllHtml(formData.get("email") as string),
       profilePhoto: (formData.get("profilePhoto") as string) || null,
+      resumeUrl: (formData.get("resumeUrl") as string) || null,
       seoTitle: stripAllHtml(formData.get("seoTitle") as string),
       seoDescription: stripAllHtml(formData.get("seoDescription") as string),
+      ogImage: (formData.get("ogImage") as string) || null,
     };
 
     const parsed = siteSettingsSchema.safeParse(raw);
