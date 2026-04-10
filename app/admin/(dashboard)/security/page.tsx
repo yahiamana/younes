@@ -1,11 +1,9 @@
-import { getAuditLogs, getSecurityEvents, getActiveSessions } from "@/app/actions/security";
-import { RevokeSessionButton } from "./RevokeSessionButton";
+import { getAuditLogs, getSecurityEvents } from "@/app/actions/security";
 
 export default async function SecurityDashboard() {
-  const [logs, events, sessions] = await Promise.all([
+  const [logs, events] = await Promise.all([
     getAuditLogs(),
-    getSecurityEvents(),
-    getActiveSessions()
+    getSecurityEvents()
   ]);
 
   return (
@@ -16,43 +14,6 @@ export default async function SecurityDashboard() {
           Monitor active sessions, audit trails, and system-level security events. Defense in Depth.
         </p>
       </header>
-
-      {/* Active Sessions */}
-      <section className="admin-card">
-        <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-          <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-          Active Sessions
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="text-xs uppercase" style={{ color: "var(--text-secondary)", borderBottom: "1px solid var(--border-subtle)" }}>
-              <tr>
-                <th className="px-4 py-3">Device & Browser</th>
-                <th className="px-4 py-3">IP Address</th>
-                <th className="px-4 py-3">Last Active</th>
-                <th className="px-4 py-3 text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessions.map(s => (
-                <tr key={s.id} style={{ borderBottom: "1px solid var(--border-subtle)" }}>
-                  <td className="px-4 py-3 font-medium text-white">{s.deviceInfo || 'Unknown Device'}</td>
-                  <td className="px-4 py-3 font-mono">{s.ipAddress}</td>
-                  <td className="px-4 py-3">{s.lastActive.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right">
-                    <RevokeSessionButton sessionId={s.id} />
-                  </td>
-                </tr>
-              ))}
-              {sessions.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="px-4 py-8 text-center text-gray-500">No active sessions found.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </section>
 
       {/* Threat Activity */}
       <section className="admin-card">
