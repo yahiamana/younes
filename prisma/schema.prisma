@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  hashedPassword      String
+  name                String
+  role                String   @default("admin")
+  failedLoginAttempts Int      @default(0)
+  lockUntil           DateTime?
+  twoFactorEnabled    Boolean  @default(false)
+  twoFactorSecret     String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  sessions            Session[]
+  auditLogs           AuditLog[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  sessionToken String   @unique
+  expiresAt    DateTime
+  userAgent    String?
+  ipAddress    String?
+  deviceInfo   String?
+  isValid      Boolean  @default(true)
+  lastActive   DateTime @default(now())
+  createdAt    DateTime @default(now())
+  user         AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  ipAddress String
+  success   Boolean
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id              String   @id @default(cuid())
+  name            String   @default("Younes")
+  title           String   @default("Data Scientist & ML/DL Engineer")
+  heroHeadline    String   @default("Transforming Data Into Intelligence")
+  heroSubtext     String   @default("Crafting intelligent systems through data science, machine learning, and deep learning")
+  aboutText       String   @default("")
+  aboutHighlights String   @default("") // JSON string for stats
+  phone           String   @default("0561020056")
+  email           String   @default("younes.bnl@yahoo.com")
+  profilePhoto    String?  
+  resumeUrl       String?
+  seoTitle        String   @default("Younes — Data Scientist & ML/DL Engineer")
+  seoDescription  String   @default("Portfolio of Younes, a Data Scientist and Machine Learning / Deep Learning Engineer.")
+  ogImage         String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String
+  techStack   String[] 
+  image       String?
+  liveUrl     String?
+  githubUrl   String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Certificate {
+  id        String   @id @default(cuid())
+  title     String
+  issuer    String
+  date      DateTime
+  imageUrl  String?
+  fileUrl   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String
+  category  String
+  icon      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String
+  url       String
+  icon      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  userId         String
+  action         String
+  targetResource String
+  targetId       String?
+  details        String?
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+  user           AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SecurityEvent {
+  id        String   @id @default(cuid())
+  type      String
+  ipAddress String?
+  userAgent String?
+  severity  String
+  metadata  String?
+  createdAt DateTime @default(now())
+}
+
+model RateLimitRecord {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  count     Int      @default(1)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
