@@ -38,8 +38,6 @@ export default async function AdminSettingsPage() {
       url: sl.url,
       icon: sl.icon,
       order: sl.order,
-      createdAt: sl.createdAt,
-      updatedAt: sl.updatedAt,
     }));
   } catch (err) {
     console.error("Admin Settings Fetch Error:", err);
