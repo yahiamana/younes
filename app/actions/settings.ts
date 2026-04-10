@@ -17,41 +17,51 @@ export async function getSiteSettings() {
 
 export async function updateSiteSettings(formData: FormData) {
   try {
-    console.log("[DEBUG] updateSiteSettings triggered.");
-    
-    // Minimalist parsing to prevent logic crashes
-    const data = {
-      name: formData.get("name") as string,
-      title: formData.get("title") as string,
-      heroHeadline: formData.get("heroHeadline") as string,
-      heroSubtext: formData.get("heroSubtext") as string,
-      aboutText: formData.get("aboutText") as string,
-      phone: formData.get("phone") as string,
-      email: formData.get("email") as string,
+    const session = await requireAuth();
+
+    // Restore Sanitization & Validation
+    const raw = {
+      name: stripAllHtml(formData.get("name") as string),
+      title: stripAllHtml(formData.get("title") as string),
+      heroHeadline: stripAllHtml(formData.get("heroHeadline") as string),
+      heroSubtext: stripAllHtml(formData.get("heroSubtext") as string),
+      aboutText: sanitizeHtml(formData.get("aboutText") as string),
+      phone: stripAllHtml(formData.get("phone") as string),
+      email: stripAllHtml(formData.get("email") as string),
       profilePhoto: (formData.get("profilePhoto") as string) || null,
-      seoTitle: formData.get("seoTitle") as string,
-      seoDescription: formData.get("seoDescription") as string,
+      seoTitle: stripAllHtml(formData.get("seoTitle") as string),
+      seoDescription: stripAllHtml(formData.get("seoDescription") as string),
     };
 
-    console.log("[DEBUG] Data extracted, starting DB operation...");
+    const parsed = siteSettingsSchema.safeParse(raw);
+    if (!parsed.success) {
+      return { error: parsed.error.flatten().fieldErrors };
+    }
 
     const existing = await prisma.siteSettings.findFirst();
     if (existing) {
-      console.log("[DEBUG] Existing settings found. Updating ID:", existing.id);
       await prisma.siteSettings.update({
         where: { id: existing.id },
-        data,
+        data: parsed.data,
       });
     } else {
-      console.log("[DEBUG] No settings found. Creating new record...");
-      await prisma.siteSettings.create({ data });
+      await prisma.siteSettings.create({ data: parsed.data });
     }
 
-    console.log("[DEBUG] DB Operation Success.");
+    // Attempt Audit Log (non-blocking)
+    try {
+      await logAudit(session.userId, "UPDATE_SETTINGS", "SiteSettings");
+    } catch (e) {
+      console.error("Non-blocking audit log failure:", e);
+    }
+
+    revalidatePath("/");
+    revalidatePath("/admin/settings");
+    
     return { success: true };
   } catch (error) {
-    console.error("[CRITICAL DEBUG ERROR]:", error);
-    const msg = error instanceof Error ? error.message : "Unknown Error";
-    return { error: `Safe Mode Failed: ${msg}` };
+    console.error("[Settings Action Error]:", error);
+    const msg = error instanceof Error ? error.message : "An unexpected error occurred";
+    return { error: `Save failed: ${msg}` };
   }
 }

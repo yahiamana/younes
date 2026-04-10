@@ -13,13 +13,12 @@ export default async function middleware(request: NextRequest) {
   // 1. Basic properties
   const isAdminPath = pathname.startsWith("/admin");
   const isLoginPage = pathname === "/admin/login";
-  const isDebugSettings = pathname === "/admin/settings";
   const isApiUpload = pathname === "/api/upload";
   const requestMethod = request.method;
 
   // 2. (Defense against CSRF for API routes)
-  // We bypass the strict origin check for the login page and debug settings to prevent lockouts
-  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(requestMethod) && !isLoginPage && !isDebugSettings) {
+  // We bypass the strict origin check for the login page to prevent lockouts during setup/recovery
+  if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(requestMethod) && !isLoginPage) {
     const origin = request.headers.get("origin");
     const referer = request.headers.get("referer");
     const forwardedHost = request.headers.get("x-forwarded-host");
@@ -61,7 +60,7 @@ export default async function middleware(request: NextRequest) {
   const token = request.cookies.get(SESSION_COOKIE_NAME)?.value;
 
   // 4. Admin Guard
-  if (isAdminPath && !isLoginPage && !isDebugSettings) {
+  if (isAdminPath && !isLoginPage) {
     if (!token) {
       return NextResponse.redirect(new URL("/admin/login", request.url));
     }
