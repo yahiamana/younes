@@ -4,7 +4,7 @@ import SocialLinksManager from "./SocialLinksManager";
 
 export default async function AdminSettingsPage() {
   let settings = null;
-  let socialLinks: Awaited<ReturnType<typeof prisma.socialLink.findMany>> = [];
+  let socialLinks: any[] = [];
 
   try {
     const rawSettings = await prisma.siteSettings.findFirst({
@@ -38,6 +38,8 @@ export default async function AdminSettingsPage() {
       url: sl.url,
       icon: sl.icon,
       order: sl.order,
+      createdAt: sl.createdAt,
+      updatedAt: sl.updatedAt,
     }));
   } catch (err) {
     console.error("Admin Settings Fetch Error:", err);
