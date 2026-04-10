@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import HomeClient from "./HomeClient";
 
 async function getData() {
+  try {
     const settings = await prisma.siteSettings.findFirst({
       orderBy: { updatedAt: 'desc' }
     });
