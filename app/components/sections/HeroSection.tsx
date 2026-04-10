@@ -151,9 +151,7 @@ export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl
           {resumeUrl ? (
             <MagneticButton>
               <a 
-                href={resumeUrl} 
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/api/download-cv" 
                 download="Younes_Benali_CV"
                 className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full text-sm font-semibold tracking-wider uppercase transition-all duration-500 overflow-hidden"
                 style={{
