@@ -65,16 +65,6 @@ export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl
     return () => ctx.revert();
   }, []);
 
-  // Force Cloudinary to download the file instead of opening it inline
-  const getDownloadUrl = (url: string) => {
-    if (url.includes('res.cloudinary.com') && !url.includes('fl_attachment')) {
-      return url.replace('/upload/', '/upload/fl_attachment/');
-    }
-    return url;
-  };
-
-  const finalResumeUrl = resumeUrl ? getDownloadUrl(resumeUrl) : null;
-
   return (
     <section 
       ref={containerRef}
@@ -158,10 +148,10 @@ export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl
             </a>
           </MagneticButton>
 
-          {finalResumeUrl ? (
+          {resumeUrl ? (
             <MagneticButton>
               <a 
-                href={finalResumeUrl} 
+                href={resumeUrl} 
                 target="_blank"
                 rel="noopener noreferrer"
                 download="Younes_Benali_CV"
