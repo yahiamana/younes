@@ -40,7 +40,7 @@ export const skillSchema = z.object({
 
 export const socialLinkSchema = z.object({
   platform: z.string().min(1, "Platform is required").max(50),
-  url: z.string().url("Invalid URL"),
+  url: z.string().min(1, "URL is required").refine(val => val.includes('.'), "Invalid URL format"),
   icon: z.string().optional().nullable(),
   order: z.number().int().default(0),
 });
