@@ -32,7 +32,6 @@ export const metadata: Metadata = {
   },
 };
 
-import CustomCursor from "./components/ui/CustomCursor";
 import MobileScrollIndicator from "./components/ui/MobileScrollIndicator";
 
 export default function RootLayout({
@@ -47,7 +46,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <CustomCursor />
         <MobileScrollIndicator />
         {children}
       </body>
