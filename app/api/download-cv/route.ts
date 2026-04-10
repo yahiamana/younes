@@ -20,8 +20,10 @@ export async function GET() {
       return new NextResponse("Failed to fetch CV from storage", { status: 500 });
     }
 
-    // Proxy the stream back to the user with an attachment header
-    return new NextResponse(response.body, {
+    // Buffer the file completely to avoid Next.js Serverless stream abort bugs
+    const buffer = await response.arrayBuffer();
+
+    return new NextResponse(buffer, {
       headers: {
         "Content-Type": response.headers.get("Content-Type") || "application/pdf",
         "Content-Disposition": 'attachment; filename="Younes_Benali_CV.pdf"',
