@@ -39,7 +39,7 @@ export async function uploadToCloudinary(
       .upload_stream(
         {
           folder,
-          resource_type: "auto",
+          resource_type: file.type === "application/pdf" ? "raw" : "auto",
           transformation:
             file.type.startsWith("image/") && file.type !== "image/svg+xml"
               ? [{ quality: "auto", fetch_format: "auto" }]
