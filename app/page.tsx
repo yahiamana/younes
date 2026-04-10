@@ -74,13 +74,16 @@ async function getData() {
       url: sl.url,
     }));
 
-    return { 
+    const data = { 
       settings: serializedSettings, 
       projects: serializedProjects, 
       certificates: serializedCertificates, 
       skills: serializedSkills, 
       socialLinks: serializedSocialLinks 
     };
+
+    // DEEP CLEAN: This is the ONLY 100% safe way to ensure NO symbols or Dates leak to Client
+    return JSON.parse(JSON.stringify(data));
   } catch (err) {
     console.error("Home Data Fetch Error (RSC Serialization Fail):", err);
     return {

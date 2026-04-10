@@ -1,8 +1,11 @@
 import { prisma } from "@/lib/db";
+import { requireAuth } from "@/lib/auth"; // Added for safety
 import SettingsForm from "./SettingsForm";
 import SocialLinksManager from "./SocialLinksManager";
 
 export default async function AdminSettingsPage() {
+  await requireAuth(); // Force session check on render
+  
   let settings = null;
   let socialLinks: any[] = [];
 
@@ -43,6 +46,10 @@ export default async function AdminSettingsPage() {
     console.error("Admin Settings Fetch Error:", err);
   }
 
+  // DEEP CLEAN: Strip all symbols/methods/metadata for safe Client transfer
+  const cleanSettings = settings ? JSON.parse(JSON.stringify(settings)) : null;
+  const cleanSocialLinks = JSON.parse(JSON.stringify(socialLinks));
+
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
@@ -52,8 +59,8 @@ export default async function AdminSettingsPage() {
         </p>
       </div>
 
-      {settings && <SettingsForm settings={settings} />}
-      <SocialLinksManager initialLinks={socialLinks} />
+      {cleanSettings && <SettingsForm settings={cleanSettings} />}
+      <SocialLinksManager initialLinks={cleanSocialLinks} />
     </div>
   );
 }
