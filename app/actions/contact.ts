@@ -4,7 +4,11 @@ import { prisma } from "@/lib/db";
 import { requireAuth } from "@/lib/auth";
 import { contactSchema } from "@/lib/validations";
 import { rateLimit } from "@/lib/rate-limit";
-import { stripAllHtml } from "@/lib/security/sanitize";
+// Safe HTML stripper that works on all platforms (no jsdom/dompurify dependency)
+function stripAllHtml(input: string): string {
+  if (!input) return input;
+  return input.replace(/<[^>]*>/g, "").trim();
+}
 import { logAudit } from "@/lib/security/audit";
 import { sendContactEmail } from "@/lib/email";
 import { revalidatePath } from "next/cache";

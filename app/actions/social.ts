@@ -32,10 +32,19 @@ export async function createSocialLink(formData: FormData) {
     const created = await prisma.socialLink.create({ data: parsed.data });
     console.log("[Social Action]: Created link", created.id);
 
-    await logAudit(session.userId, "CREATE_SOCIALLINK", "SocialLink", created.platform);
-    
-    revalidatePath("/");
-    revalidatePath("/admin/settings");
+    try {
+      await logAudit(session.userId, "CREATE_SOCIALLINK", "SocialLink", created.platform);
+    } catch (e) {
+      console.error("Non-blocking audit failure:", e);
+    }
+
+    try {
+      revalidatePath("/");
+      revalidatePath("/admin/settings");
+    } catch (e) {
+      console.error("Non-blocking revalidation failure:", e);
+    }
+
     return { success: true };
   } catch (error) {
     console.error("[Social Create Error]:", error);
@@ -61,10 +70,20 @@ export async function updateSocialLink(id: string, formData: FormData) {
     }
 
     await prisma.socialLink.update({ where: { id }, data: parsed.data });
-    await logAudit(session.userId, "UPDATE_SOCIALLINK", "SocialLink", id);
-    
-    revalidatePath("/");
-    revalidatePath("/admin/settings");
+
+    try {
+      await logAudit(session.userId, "UPDATE_SOCIALLINK", "SocialLink", id);
+    } catch (e) {
+      console.error("Non-blocking audit failure:", e);
+    }
+
+    try {
+      revalidatePath("/");
+      revalidatePath("/admin/settings");
+    } catch (e) {
+      console.error("Non-blocking revalidation failure:", e);
+    }
+
     return { success: true };
   } catch (error) {
     console.error("[Social Update Error]:", error);
@@ -78,10 +97,20 @@ export async function deleteSocialLink(id: string) {
     const session = await requireAuth();
 
     await prisma.socialLink.delete({ where: { id } });
-    await logAudit(session.userId, "DELETE_SOCIALLINK", "SocialLink", id);
-    
-    revalidatePath("/");
-    revalidatePath("/admin/settings");
+
+    try {
+      await logAudit(session.userId, "DELETE_SOCIALLINK", "SocialLink", id);
+    } catch (e) {
+      console.error("Non-blocking audit failure:", e);
+    }
+
+    try {
+      revalidatePath("/");
+      revalidatePath("/admin/settings");
+    } catch (e) {
+      console.error("Non-blocking revalidation failure:", e);
+    }
+
     return { success: true };
   } catch (error) {
     console.error("[Social Delete Error]:", error);
