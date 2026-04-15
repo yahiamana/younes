@@ -50,6 +50,7 @@ export async function createProject(formData: FormData) {
   await prisma.project.create({ data: parsed.data });
   await logAudit(session.userId, "CREATE_PROJECT", "Project", parsed.data.slug);
   revalidatePath("/");
+  revalidatePath("/projects");
   revalidatePath("/admin/projects");
   return { success: true };
 }
@@ -81,6 +82,7 @@ export async function updateProject(id: string, formData: FormData) {
   await prisma.project.update({ where: { id }, data: parsed.data });
   await logAudit(session.userId, "UPDATE_PROJECT", "Project", id);
   revalidatePath("/");
+  revalidatePath("/projects");
   revalidatePath("/admin/projects");
   return { success: true };
 }
@@ -91,6 +93,7 @@ export async function deleteProject(id: string) {
   await prisma.project.delete({ where: { id } });
   await logAudit(session.userId, "DELETE_PROJECT", "Project", id);
   revalidatePath("/");
+  revalidatePath("/projects");
   revalidatePath("/admin/projects");
   return { success: true };
 }
