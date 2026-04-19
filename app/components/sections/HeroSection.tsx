@@ -94,10 +94,6 @@ export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl
                 priority
               />
             </div>
-
-            {/* Subtle decorative elements */}
-            {/* Subtle decorative elements */}
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#e8c97e] rounded-full border-4 border-[#0e0e1c] z-20 shadow-[0_0_15px_rgba(232,201,126,0.5)]" />
           </div>
         )}
 
@@ -138,7 +134,7 @@ export default function HeroSection({ headline, subtext, profilePhoto, resumeUrl
         <div ref={ctaRef} className="mt-12 flex flex-col sm:flex-row items-center gap-6">
           <MagneticButton>
             <a 
-              href="#projects" 
+              href="/projects" 
               className="btn-primary"
             >
               <span>View My Work</span>

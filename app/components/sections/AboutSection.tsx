@@ -114,7 +114,7 @@ export default function AboutSection({ aboutText, aboutHighlights, profilePhoto 
           <div className="flex-[1.2] space-y-12">
             <ScrollReveal>
               <p className="text-white/40 uppercase tracking-[0.4em] text-xs font-bold px-4 py-1.5 border border-white/5 rounded-full inline-block backdrop-blur-sm bg-white/5">
-                The Narrative
+                About Me
               </p>
             </ScrollReveal>
             

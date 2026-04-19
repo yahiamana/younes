@@ -81,7 +81,6 @@ export default function Navbar({ name }: NavbarProps) {
             className="text-lg md:text-xl font-bold tracking-tight hover:text-[var(--accent-primary)] transition-colors"
           >
             {name}
-            <span style={{ color: "var(--accent-primary)" }}>.</span>
           </Link>
 
           {/* Desktop Nav */}

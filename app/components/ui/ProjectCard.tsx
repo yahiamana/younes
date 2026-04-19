@@ -6,6 +6,7 @@ import Link from "next/link";
 
 interface ProjectCardProps {
   title: string;
+  slug: string;
   description: string;
   image: string | null;
   techStack: string[];
@@ -17,6 +18,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({
   title,
+  slug,
   description,
   image,
   techStack,
@@ -33,6 +35,13 @@ export default function ProjectCard({
       viewport={{ once: true }}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#141427] backdrop-blur-sm transition-all duration-500 hover:border-[#e8c97e]/20"
     >
+      {/* Card Content Overlay Link (Makes entire card clickable) */}
+      <Link 
+        href={`/projects/${slug}`} 
+        className="absolute inset-0 z-10"
+        aria-label={`View ${title} details`}
+      />
+
       {/* Visual Header / Image */}
       <div className="relative aspect-[16/9] w-full overflow-hidden">
         {image ? (
@@ -52,7 +61,7 @@ export default function ProjectCard({
         
         {/* Featured Badge */}
         {featured && (
-          <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#e8c97e]/10 border border-[#e8c97e]/20 backdrop-blur-md">
+          <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[#e8c97e]/10 border border-[#e8c97e]/20 backdrop-blur-md z-20">
             <span className="text-[10px] font-bold text-[#e8c97e] uppercase tracking-tighter">Strategic Asset</span>
           </div>
         )}
@@ -82,7 +91,7 @@ export default function ProjectCard({
         </div>
 
         {/* Action Links */}
-        <div className="mt-6 flex items-center justify-between pt-4 border-t border-white/5">
+        <div className="mt-6 flex items-center justify-between pt-4 border-t border-white/5 relative z-20">
           <div className="flex gap-4">
             {liveUrl && (
               <a
@@ -113,17 +122,14 @@ export default function ProjectCard({
               </a>
             )}
           </div>
-          <Link
-            href={`/projects/${title.toLowerCase().replace(/ /g, "-")}`}
-            className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 hover:text-white transition-colors"
-          >
+          <div className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/30 group-hover:text-white transition-colors">
             Insights →
-          </Link>
+          </div>
         </div>
       </div>
 
       {/* Decorative Glow */}
-      <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[#e8c97e]/5 blur-[60px] rounded-full group-hover:bg-[#e8c97e]/10 transition-all duration-700" />
+      <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[#e8c97e]/5 blur-[60px] rounded-full group-hover:bg-[#e8c97e]/10 transition-all duration-700 pointer-events-none" />
     </motion.div>
   );
 }
