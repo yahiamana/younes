@@ -139,10 +139,10 @@ export default function CertificatesSection({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 overflow-hidden"
+            className="fixed inset-0 z-[100] flex items-start md:items-center justify-center p-4 md:p-8 overflow-y-auto bg-[#0e0e1c]/90 backdrop-blur-xl"
           >
             <div 
-              className="absolute inset-0 bg-[#0e0e1c]/90 backdrop-blur-xl" 
+              className="absolute inset-0" 
               onClick={() => setSelectedCert(null)}
             />
             
@@ -151,10 +151,10 @@ export default function CertificatesSection({
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-5xl aspect-video bg-[#141427] rounded-2xl border border-[#e8c97e]/20 shadow-[0_0_100px_rgba(232,201,126,0.1)] overflow-hidden flex flex-col md:flex-row"
+              className="relative w-full max-w-5xl h-auto md:aspect-video bg-[#141427] rounded-2xl border border-[#e8c97e]/20 shadow-[0_0_100px_rgba(232,201,126,0.1)] overflow-hidden flex flex-col md:flex-row my-auto"
             >
               {/* Image Side */}
-              <div className="relative flex-1 bg-black">
+              <div className="relative w-full h-64 md:h-auto md:flex-1 bg-black">
                 {selectedCert.imageUrl && (
                   <Image
                     src={selectedCert.imageUrl}
@@ -168,10 +168,10 @@ export default function CertificatesSection({
               </div>
 
               {/* Info Sidebar */}
-              <div className="w-full md:w-80 p-8 flex flex-col border-l border-white/5 bg-[#0e0e1c]/50 backdrop-blur-sm">
+              <div className="w-full md:w-80 p-6 md:p-8 flex flex-col border-t md:border-t-0 md:border-l border-white/5 bg-[#0e0e1c]/50 backdrop-blur-sm">
                 <button
                   onClick={() => setSelectedCert(null)}
-                  className="self-end p-2 -mr-2 mb-8 text-white/40 hover:text-white transition-colors"
+                  className="self-end p-2 -mr-2 mb-4 md:mb-8 text-white/40 hover:text-white transition-colors"
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -180,10 +180,10 @@ export default function CertificatesSection({
 
                 <div className="flex-1">
                   <p className="text-[#e8c97e] text-[10px] font-bold uppercase tracking-[0.3em] mb-4">Official Credential</p>
-                  <h2 className="text-2xl font-bold text-white mb-2 leading-tight">{selectedCert.title}</h2>
-                  <p className="text-white/60 font-medium mb-6">{selectedCert.issuer}</p>
+                  <h2 className="text-xl md:text-2xl font-bold text-white mb-2 leading-tight">{selectedCert.title}</h2>
+                  <p className="text-white/60 font-medium mb-6 text-sm md:text-base">{selectedCert.issuer}</p>
                   
-                  <div className="space-y-4 py-6 border-y border-white/5">
+                  <div className="space-y-4 py-4 md:py-6 border-y border-white/5">
                     <div className="flex justify-between items-center">
                       <span className="text-white/30 text-xs">Conferred Date</span>
                       <span className="text-white/80 text-xs font-mono">
@@ -200,7 +200,7 @@ export default function CertificatesSection({
                   </div>
                 </div>
 
-                <div className="mt-auto space-y-3">
+                <div className="mt-8 md:mt-auto space-y-3">
                   {selectedCert.fileUrl && (
                     <a
                       href={selectedCert.fileUrl}

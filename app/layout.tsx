@@ -15,18 +15,18 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Younes — Data Scientist & ML/DL Engineer",
+  title: "Younes Benali — Data Scientist & ML/DL Engineer",
   description:
     "Portfolio of Younes, a Data Scientist and Machine Learning / Deep Learning Engineer specializing in building intelligent systems and data-driven solutions.",
   openGraph: {
-    title: "Younes — Data Scientist & ML/DL Engineer",
+    title: "Younes Benali — Data Scientist & ML/DL Engineer",
     description:
       "Portfolio of Younes, a Data Scientist and Machine Learning / Deep Learning Engineer.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Younes — Data Scientist & ML/DL Engineer",
+    title: "Younes Benali — Data Scientist & ML/DL Engineer",
     description:
       "Portfolio of Younes, a Data Scientist and Machine Learning / Deep Learning Engineer.",
   },
